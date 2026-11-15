@@ -1,0 +1,1818 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FF Surprise Market</title>
+
+  <style>
+    /* =========================================
+       RESET
+    ========================================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --orange: #ff7a00;
+      --orange-light: #ff9d3c;
+      --dark: #090909;
+      --dark-card: #151515;
+      --dark-card-2: #1c1c1c;
+      --text: #ffffff;
+      --muted: #a5a5a5;
+      --green: #24d164;
+      --border: #303030;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, #2b1808, transparent 35%),
+        var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 18px 8%;
+
+      background: rgba(9, 9, 9, 0.95);
+      backdrop-filter: blur(10px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--orange);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      color: #dddddd;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    .browse-btn {
+      background: var(--orange);
+      color: black;
+
+      padding: 11px 20px;
+      border-radius: 8px;
+
+      font-weight: bold;
+      text-decoration: none;
+
+      transition: 0.3s;
+    }
+
+    .browse-btn:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+    }
+
+
+    /* =========================================
+       HERO
+    ========================================= */
+
+    .hero {
+      min-height: 560px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 80px 8%;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(9, 9, 9, 0.97) 10%,
+          rgba(9, 9, 9, 0.65) 55%,
+          rgba(9, 9, 9, 0.45)
+        ),
+        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=90");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-content {
+      max-width: 700px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+
+      padding: 9px 16px;
+      margin-bottom: 22px;
+
+      color: var(--orange);
+      background: rgba(255, 122, 0, 0.12);
+
+      border: 1px solid #754000;
+      border-radius: 30px;
+
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .hero h1 {
+      font-size: clamp(45px, 7vw, 80px);
+      line-height: 1.02;
+
+      margin-bottom: 22px;
+
+      font-weight: 900;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      color: #c5c5c5;
+
+      max-width: 600px;
+
+      font-size: 18px;
+      line-height: 1.7;
+
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      display: inline-block;
+
+      padding: 15px 25px;
+
+      border-radius: 8px;
+
+      text-decoration: none;
+      font-weight: bold;
+
+      transition: 0.3s;
+    }
+
+    .primary-btn {
+      background: var(--orange);
+      color: black;
+    }
+
+    .secondary-btn {
+      color: white;
+      border: 1px solid #555;
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover {
+      transform: translateY(-3px);
+    }
+
+
+    /* =========================================
+       INFO BOXES
+    ========================================= */
+
+    .stats {
+      width: min(1100px, 90%);
+      margin: -45px auto 70px;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      background: #121212;
+
+      border: 1px solid var(--border);
+      border-radius: 15px;
+
+      overflow: hidden;
+
+      position: relative;
+      z-index: 2;
+    }
+
+    .stat {
+      text-align: center;
+
+      padding: 28px;
+
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .stat h2 {
+      color: var(--orange);
+      font-size: 30px;
+      margin-bottom: 7px;
+    }
+
+    .stat p {
+      color: var(--muted);
+    }
+
+
+    /* =========================================
+       MARKETPLACE
+    ========================================= */
+
+    .market {
+      padding: 30px 8% 90px;
+    }
+
+    .section-title {
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .section-title h2 span {
+      color: var(--orange);
+    }
+
+    .section-title p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+
+    /* =========================================
+       CARDS
+    ========================================= */
+
+    .accounts-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(260px, 1fr));
+
+      gap: 25px;
+    }
+
+    .account-card {
+      background:
+        linear-gradient(145deg, #1b1b1b, #101010);
+
+      border: 1px solid var(--border);
+      border-radius: 16px;
+
+      overflow: hidden;
+
+      transition: 0.35s;
+    }
+
+    .account-card:hover {
+      transform: translateY(-8px);
+
+      border-color: var(--orange);
+
+      box-shadow:
+        0 18px 50px rgba(255, 122, 0, 0.12);
+    }
+
+    .card-image {
+      height: 190px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition: 0.4s;
+    }
+
+    .account-card:hover .card-image img {
+      transform: scale(1.08);
+    }
+
+    .price-tag {
+      position: absolute;
+
+      top: 15px;
+      right: 15px;
+
+      padding: 8px 12px;
+
+      background: var(--orange);
+      color: black;
+
+      border-radius: 20px;
+
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .card-content {
+      padding: 22px;
+    }
+
+    .card-content h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .available {
+      color: var(--green);
+      font-size: 13px;
+    }
+
+    .card-description {
+      color: var(--muted);
+
+      font-size: 14px;
+      line-height: 1.6;
+
+      margin: 18px 0;
+    }
+
+    .features {
+      list-style: none;
+
+      border-top: 1px solid #2c2c2c;
+      border-bottom: 1px solid #2c2c2c;
+
+      padding: 15px 0;
+
+      color: #cccccc;
+
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .features li::before {
+      content: "✓";
+      color: var(--orange);
+      margin-right: 8px;
+    }
+
+    .card-bottom {
+      margin-top: 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+    }
+
+    .price {
+      color: var(--orange);
+
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .buy-btn {
+      background: var(--orange);
+      color: black;
+
+      border: none;
+      border-radius: 8px;
+
+      padding: 12px 16px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition: 0.3s;
+    }
+
+    .buy-btn:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+    }
+
+
+    /* =========================================
+       HOW IT WORKS
+    ========================================= */
+
+    .how-it-works {
+      background: #101010;
+
+      border-top: 1px solid #242424;
+      border-bottom: 1px solid #242424;
+
+      padding: 80px 8%;
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+
+      font-size: 40px;
+
+      margin-bottom: 50px;
+    }
+
+    .steps {
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+      gap: 30px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 25px;
+    }
+
+    .step-number {
+      width: 65px;
+      height: 65px;
+
+      display: grid;
+      place-items: center;
+
+      margin: 0 auto 20px;
+
+      border-radius: 50%;
+
+      border: 1px solid var(--orange);
+
+      background:
+        rgba(255, 122, 0, 0.12);
+
+      color: var(--orange);
+
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+
+    /* =========================================
+       MODALS
+    ========================================= */
+
+    .modal {
+      display: none;
+
+      position: fixed;
+      inset: 0;
+
+      z-index: 5000;
+
+      background:
+        rgba(0, 0, 0, 0.88);
+
+      padding: 20px;
+
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 500px;
+
+      max-height: 90vh;
+      overflow-y: auto;
+
+      position: relative;
+
+      background: #161616;
+
+      border: 1px solid var(--orange);
+      border-radius: 18px;
+
+      padding: 30px;
+
+      box-shadow:
+        0 25px 90px rgba(0, 0, 0, 0.9);
+    }
+
+    .close-btn {
+      position: absolute;
+
+      top: 10px;
+      right: 15px;
+
+      border: none;
+      background: transparent;
+
+      color: white;
+
+      font-size: 32px;
+
+      cursor: pointer;
+    }
+
+    .modal-content h2 {
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+
+    .modal-description {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .selected-package {
+      background: #101010;
+
+      border: 1px solid #303030;
+      border-radius: 12px;
+
+      padding: 20px;
+
+      margin: 25px 0;
+    }
+
+    .selected-package p {
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .selected-package h3 {
+      margin-bottom: 18px;
+    }
+
+    .selected-package h2 {
+      margin: 0;
+      color: var(--orange);
+    }
+
+
+    /* =========================================
+       FORM
+    ========================================= */
+
+    .purchase-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .purchase-form label {
+      margin: 12px 0 8px;
+      color: #dddddd;
+    }
+
+    .purchase-form input {
+      width: 100%;
+
+      padding: 14px;
+
+      background: #0e0e0e;
+      color: white;
+
+      border: 1px solid #444;
+      border-radius: 8px;
+
+      font-size: 15px;
+
+      outline: none;
+    }
+
+    .purchase-form input:focus {
+      border-color: var(--orange);
+    }
+
+    .continue-btn {
+      margin-top: 25px;
+
+      padding: 15px;
+
+      border: none;
+      border-radius: 8px;
+
+      background: var(--orange);
+      color: black;
+
+      font-size: 16px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .continue-btn:hover {
+      background: var(--orange-light);
+    }
+
+
+    /* =========================================
+       PAYMENT
+    ========================================= */
+
+    .payment-info {
+      background: #0f0f0f;
+
+      border: 1px solid #303030;
+      border-radius: 12px;
+
+      padding: 20px;
+
+      margin: 25px 0;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 8px;
+    }
+
+    .payment-info span {
+      color: #777;
+
+      font-size: 13px;
+
+      margin-top: 8px;
+    }
+
+    .payment-info strong {
+      font-size: 18px;
+    }
+
+    .account-number {
+      color: var(--orange);
+
+      font-size: 25px !important;
+      letter-spacing: 1px;
+    }
+
+    .order-box {
+      padding: 15px;
+
+      background:
+        rgba(255, 122, 0, 0.08);
+
+      border:
+        1px dashed var(--orange);
+
+      border-radius: 8px;
+
+      text-align: center;
+
+      margin-bottom: 15px;
+    }
+
+    .order-box strong {
+      display: block;
+
+      color: var(--orange);
+
+      margin-top: 7px;
+
+      font-size: 18px;
+    }
+
+    .copy-btn {
+      width: 100%;
+
+      padding: 13px;
+
+      background: transparent;
+
+      border: 1px solid #555;
+      border-radius: 8px;
+
+      color: white;
+
+      cursor: pointer;
+
+      margin-bottom: 10px;
+    }
+
+    .paid-btn {
+      width: 100%;
+
+      padding: 15px;
+
+      background: var(--orange);
+      color: black;
+
+      border: none;
+      border-radius: 8px;
+
+      font-size: 16px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .warning {
+      color: #999;
+
+      font-size: 12px;
+      line-height: 1.5;
+
+      text-align: center;
+
+      margin-top: 15px;
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    footer {
+      background: #080808;
+
+      text-align: center;
+
+      padding: 35px 8%;
+
+      color: #777;
+
+      line-height: 1.7;
+    }
+
+    footer span {
+      color: var(--orange);
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 700px) {
+
+      nav {
+        padding: 15px 5%;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 70px 6%;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+        margin-top: -20px;
+      }
+
+      .stat {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .stat:last-child {
+        border-bottom: none;
+      }
+
+      .market,
+      .how-it-works {
+        padding-left: 6%;
+        padding-right: 6%;
+      }
+
+      .card-bottom {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .buy-btn {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =====================================
+       NAVIGATION
+  ====================================== -->
+
+  <nav>
+
+    <div class="logo">
+      🔥 <span>FF</span> SURPRISE
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#market">Packages</a></li>
+      <li><a href="#how">How It Works</a></li>
+    </ul>
+
+    <a href="#market" class="browse-btn">
+      Browse
+    </a>
+
+  </nav>
+
+
+
+  <!-- =====================================
+       HERO
+  ====================================== -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        🎁 SURPRISE ACCOUNT PACKAGES
+      </div>
+
+      <h1>
+        Choose Your Budget.
+        <span>Get a Surprise.</span>
+      </h1>
+
+      <p>
+        Select a price range and receive a surprise account package
+        based on the package you choose.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#market" class="primary-btn">
+          Explore Packages 🔥
+        </a>
+
+        <a href="#how" class="secondary-btn">
+          How It Works
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================
+       STATS
+  ====================================== -->
+
+  <section class="stats">
+
+    <div class="stat">
+      <h2>🎁</h2>
+      <p>Surprise Packages</p>
+    </div>
+
+    <div class="stat">
+      <h2>₦</h2>
+      <p>Different Price Ranges</p>
+    </div>
+
+    <div class="stat">
+      <h2>⚡</h2>
+      <p>Simple Order Process</p>
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================
+       MARKETPLACE
+  ====================================== -->
+
+  <section class="market" id="market">
+
+    <div class="section-title">
+
+      <h2>
+        Choose Your <span>Package</span>
+      </h2>
+
+      <p>
+        The exact account details remain a surprise until
+        your order is confirmed and payment is verified.
+      </p>
+
+    </div>
+
+
+    <div class="accounts-grid">
+
+
+      <!-- PACKAGE 1 -->
+
+      <div class="account-card">
+
+        <div class="card-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80"
+            alt="Gaming package">
+
+          <div class="price-tag">
+            BUDGET
+          </div>
+
+        </div>
+
+
+        <div class="card-content">
+
+          <h3>Starter Surprise 🎁</h3>
+
+          <div class="available">
+            ● Package Available
+          </div>
+
+          <p class="card-description">
+            A surprise package for buyers looking for
+            an affordable option.
+          </p>
+
+          <ul class="features">
+            <li>Surprise account package</li>
+            <li>Budget price range</li>
+            <li>Order tracking ID</li>
+          </ul>
+
+          <div class="card-bottom">
+
+            <div class="price">
+              ₦8,000
+            </div>
+
+            <button
+              class="buy-btn"
+              onclick="openPurchase('Starter Surprise Account', '₦8,000')">
+
+              Buy Now
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- PACKAGE 2 -->
+
+      <div class="account-card">
+
+        <div class="card-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80"
+            alt="Gaming package">
+
+          <div class="price-tag">
+            POPULAR
+          </div>
+
+        </div>
+
+
+        <div class="card-content">
+
+          <h3>Pro Surprise 🎁</h3>
+
+          <div class="available">
+            ● Package Available
+          </div>
+
+          <p class="card-description">
+            A mid-range surprise package with
+            more premium potential.
+          </p>
+
+          <ul class="features">
+            <li>Surprise account package</li>
+            <li>Mid-range selection</li>
+            <li>Order tracking ID</li>
+          </ul>
+
+          <div class="card-bottom">
+
+            <div class="price">
+              ₦20,000
+            </div>
+
+            <button
+              class="buy-btn"
+              onclick="openPurchase('Pro Surprise Account', '₦20,000')">
+
+              Buy Now
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- PACKAGE 3 -->
+
+      <div class="account-card">
+
+        <div class="card-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=800&q=80"
+            alt="Gaming package">
+
+          <div class="price-tag">
+            ELITE
+          </div>
+
+        </div>
+
+
+        <div class="card-content">
+
+          <h3>Elite Surprise 🎁</h3>
+
+          <div class="available">
+            ● Package Available
+          </div>
+
+          <p class="card-description">
+            A premium surprise package for buyers
+            looking for a higher range.
+          </p>
+
+          <ul class="features">
+            <li>Premium surprise package</li>
+            <li>Higher price range</li>
+            <li>Order tracking ID</li>
+          </ul>
+
+          <div class="card-bottom">
+
+            <div class="price">
+              ₦50,000
+            </div>
+
+            <button
+              class="buy-btn"
+              onclick="openPurchase('Elite Surprise Account', '₦50,000')">
+
+              Buy Now
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- PACKAGE 4 -->
+
+      <div class="account-card">
+
+        <div class="card-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80"
+            alt="Gaming package">
+
+          <div class="price-tag">
+            PREMIUM
+          </div>
+
+        </div>
+
+
+        <div class="card-content">
+
+          <h3>Ultimate Surprise 🎁</h3>
+
+          <div class="available">
+            ● Package Available
+          </div>
+
+          <p class="card-description">
+            The highest price range for a premium
+            surprise package.
+          </p>
+
+          <ul class="features">
+            <li>Premium surprise package</li>
+            <li>Top price range</li>
+            <li>Order tracking ID</li>
+          </ul>
+
+          <div class="card-bottom">
+
+            <div class="price">
+              ₦80,000
+            </div>
+
+            <button
+              class="buy-btn"
+              onclick="openPurchase('Ultimate Surprise Account', '₦80,000')">
+
+              Buy Now
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================
+       HOW IT WORKS
+  ====================================== -->
+
+  <section class="how-it-works" id="how">
+
+    <h2>
+      How It Works
+    </h2>
+
+
+    <div class="steps">
+
+
+      <div class="step">
+
+        <div class="step-number">
+          1
+        </div>
+
+        <h3>Choose</h3>
+
+        <p>
+          Select the surprise package that fits your budget.
+        </p>
+
+      </div>
+
+
+
+      <div class="step">
+
+        <div class="step-number">
+          2
+        </div>
+
+        <h3>Order</h3>
+
+        <p>
+          Enter your name and WhatsApp contact information.
+        </p>
+
+      </div>
+
+
+
+      <div class="step">
+
+        <div class="step-number">
+          3
+        </div>
+
+        <h3>Pay</h3>
+
+        <p>
+          Follow the displayed payment instructions and
+          submit your order notification.
+        </p>
+
+      </div>
+
+
+
+      <div class="step">
+
+        <div class="step-number">
+          4
+        </div>
+
+        <h3>Verify</h3>
+
+        <p>
+          Payment must be independently verified before
+          any delivery is made.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================
+       PURCHASE MODAL
+  ====================================== -->
+
+  <div class="modal" id="purchaseModal">
+
+    <div class="modal-content">
+
+      <button
+        class="close-btn"
+        onclick="closePurchase()">
+
+        ×
+
+      </button>
+
+
+      <h2>
+        🎁 Your Surprise Package
+      </h2>
+
+
+      <p class="modal-description">
+
+        Enter your details to continue.
+        Your package selection will be attached
+        to your order.
+
+      </p>
+
+
+      <div class="selected-package">
+
+        <p>
+          SELECTED PACKAGE
+        </p>
+
+        <h3 id="packageName">
+          Package Name
+        </h3>
+
+        <p>
+          PRICE
+        </p>
+
+        <h2 id="packagePrice">
+          ₦0
+        </h2>
+
+      </div>
+
+
+
+      <form
+        class="purchase-form"
+        id="purchaseForm">
+
+
+        <label>
+          Your Name
+        </label>
+
+        <input
+          type="text"
+          id="buyerName"
+          placeholder="Enter your name"
+          required>
+
+
+
+        <label>
+          Your WhatsApp Number
+        </label>
+
+        <input
+          type="tel"
+          id="buyerWhatsApp"
+          placeholder="Example: 08012345678"
+          required>
+
+
+        <button
+          type="submit"
+          class="continue-btn">
+
+          Continue to Payment →
+
+        </button>
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================
+       PAYMENT MODAL
+  ====================================== -->
+
+  <div class="modal" id="paymentModal">
+
+    <div class="modal-content">
+
+
+      <button
+        class="close-btn"
+        onclick="closePayment()">
+
+        ×
+
+      </button>
+
+
+      <h2>
+        💳 Payment Instructions
+      </h2>
+
+
+      <p class="modal-description">
+
+        Transfer the exact package amount to the
+        payment details below.
+
+      </p>
+
+
+
+      <div class="payment-info">
+
+
+        <span>
+          PAYMENT PROVIDER
+        </span>
+
+        <strong>
+          SmartCash
+        </strong>
+
+
+        <span>
+          ACCOUNT NUMBER
+        </span>
+
+        <strong class="account-number">
+          0829601790
+        </strong>
+
+
+        <span>
+          ACCOUNT NAME
+        </span>
+
+        <strong>
+          BAMIDELE
+        </strong>
+
+
+        <span>
+          AMOUNT
+        </span>
+
+        <strong id="paymentAmount">
+          ₦0
+        </strong>
+
+
+      </div>
+
+
+
+      <div class="order-box">
+
+        Your Order ID
+
+        <strong id="orderId">
+          FF-000000
+        </strong>
+
+      </div>
+
+
+
+      <button
+        class="copy-btn"
+        onclick="copyAccountNumber()">
+
+        📋 Copy Account Number
+
+      </button>
+
+
+
+      <button
+        class="paid-btn"
+        onclick="sendOrderNotification()">
+
+        ✅ I Have Made Payment
+
+      </button>
+
+
+      <p class="warning">
+
+        Clicking this button does not automatically
+        confirm payment. Payment should be verified
+        before any account details are delivered.
+
+      </p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================
+       FOOTER
+  ====================================== -->
+
+  <footer>
+
+    <p>
+      © 2026
+      <span>FF SURPRISE</span>
+      — Gaming marketplace concept.
+    </p>
+
+    <p>
+      Always follow applicable laws and relevant platform rules.
+    </p>
+
+  </footer>
+
+
+
+  <!-- =====================================
+       JAVASCRIPT
+  ====================================== -->
+
+  <script>
+
+
+    /* =====================================
+       ORDER DATA
+    ====================================== */
+
+    let selectedPackage = "";
+    let selectedPrice = "";
+
+    let buyerName = "";
+    let buyerWhatsApp = "";
+
+    let currentOrderId = "";
+
+
+    /* =====================================
+       OPEN PURCHASE WINDOW
+    ====================================== */
+
+    function openPurchase(packageName, price) {
+
+      selectedPackage = packageName;
+      selectedPrice = price;
+
+
+      document.getElementById(
+        "packageName"
+      ).innerText = packageName;
+
+
+      document.getElementById(
+        "packagePrice"
+      ).innerText = price;
+
+
+      document.getElementById(
+        "purchaseModal"
+      ).style.display = "flex";
+
+    }
+
+
+
+    /* =====================================
+       CLOSE PURCHASE WINDOW
+    ====================================== */
+
+    function closePurchase() {
+
+      document.getElementById(
+        "purchaseModal"
+      ).style.display = "none";
+
+    }
+
+
+
+    /* =====================================
+       PURCHASE FORM
+    ====================================== */
+
+    document.getElementById(
+      "purchaseForm"
+    ).addEventListener(
+      "submit",
+
+      function(event) {
+
+        event.preventDefault();
+
+
+        buyerName =
+          document.getElementById(
+            "buyerName"
+          ).value.trim();
+
+
+        buyerWhatsApp =
+          document.getElementById(
+            "buyerWhatsApp"
+          ).value.trim();
+
+
+
+        /* GENERATE ORDER ID */
+
+        const timePart =
+          Date.now()
+            .toString()
+            .slice(-6);
+
+
+        const randomPart =
+          Math.floor(
+            Math.random() * 900 + 100
+          );
+
+
+        currentOrderId =
+          "FF-" +
+          timePart +
+          "-" +
+          randomPart;
+
+
+
+        /* DISPLAY ORDER */
+
+        document.getElementById(
+          "orderId"
+        ).innerText = currentOrderId;
+
+
+        document.getElementById(
+          "paymentAmount"
+        ).innerText = selectedPrice;
+
+
+
+        /* CLOSE FIRST MODAL */
+
+        closePurchase();
+
+
+
+        /* OPEN PAYMENT MODAL */
+
+        document.getElementById(
+          "paymentModal"
+        ).style.display = "flex";
+
+      }
+
+    );
+
+
+
+    /* =====================================
+       CLOSE PAYMENT WINDOW
+    ====================================== */
+
+    function closePayment() {
+
+      document.getElementById(
+        "paymentModal"
+      ).style.display = "none";
+
+    }
+
+
+
+    /* =====================================
+       COPY PAYMENT ACCOUNT NUMBER
+    ====================================== */
+
+    function copyAccountNumber() {
+
+      const accountNumber =
+        "0829601790";
+
+
+      navigator.clipboard.writeText(
+        accountNumber
+      );
+
+
+      alert(
+        "Account number copied: " +
+        accountNumber
+      );
+
+    }
+
+
+
+    /* =====================================
+       SEND ORDER NOTIFICATION
+    ====================================== */
+
+    function sendOrderNotification() {
+
+      /*
+        SELLER WHATSAPP NUMBER
+
+        Country code format:
+        234 + Nigerian number without first 0
+      */
+
+      const sellerWhatsApp =
+        "2349114623257";
+
+
+      const message =
+
+`🔥 NEW SURPRISE PACKAGE ORDER
+
+ORDER ID:
+${currentOrderId}
+
+BUYER NAME:
+${buyerName}
+
+BUYER WHATSAPP:
+${buyerWhatsApp}
+
+SELECTED PACKAGE:
+${selectedPackage}
+
+AMOUNT:
+${selectedPrice}
+
+STATUS:
+Buyer says payment has been made.
+
+IMPORTANT:
+Verify payment independently before delivering any account details.`;
+
+
+      const whatsappURL =
+
+        "https://wa.me/" +
+        sellerWhatsApp +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+      /*
+        OPEN WHATSAPP
+      */
+
+      window.open(
+        whatsappURL,
+        "_blank"
+      );
+
+
+      alert(
+
+        "Your order notification is ready to send. " +
+
+        "The seller must verify payment before " +
+
+        "sending any account details."
+
+      );
+
+    }
+
+
+    /* =====================================
+       CLOSE MODAL WHEN CLICKING OUTSIDE
+    ====================================== */
+
+    window.addEventListener(
+      "click",
+
+      function(event) {
+
+        const purchaseModal =
+          document.getElementById(
+            "purchaseModal"
+          );
+
+
+        const paymentModal =
+          document.getElementById(
+            "paymentModal"
+          );
+
+
+        if (event.target === purchaseModal) {
+
+          closePurchase();
+
+        }
+
+
+        if (event.target === paymentModal) {
+
+          closePayment();
+
+        }
+
+      }
+
+    );
+
+
+  </script>
+
+
+</body>
+</html>
+```
